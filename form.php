@@ -41,13 +41,13 @@ if (!empty($messages)) {
     ?>
   </select>
   </div>
-  <div>
+  <div <?php if ($errors['sex']) {print 'class="error"';} ?>>
   <label>Пол: </label>
   <span><input type="radio" name="sex" value="0">М</span>
   <span><input type="radio" name="sex" value="1">Ж</span>
   </div>
   <p></p>
-  <div>
+  <div <?php if ($errors['limbs']) {print 'class="error"';} ?>>
   <label>Number of limbs: </label>
   <span><input type="radio" name="limbs" value="1">1</span>
   <span><input type="radio" name="limbs" value="2">2</span>

@@ -25,16 +25,15 @@ if (!empty($messages)) {
 <form action="" method="POST">
   <div>
   <label>fio:</label>
-  <input name="name" />
+  <input name="name" <?php if ($errors['name']) {print 'class="error"';} ?> value="<?php print $values['name']; ?>" />
   </div>
   <div>
   <label>email:</label>
-  <input name="email" type="email" class = "email">
-  
-</div>
+  <input name="email" type="email" <?php if ($errors['email']) {print 'class="error"';} ?> value="<?php print $values['email']; ?>"/>
+  </div>
   <div>
   <label>birthyear:</label>
-  <select name="year">
+  <select name="year" <?php if ($errors['year']) {print 'class="error"';} ?> value="<?php print $values['year']; ?>">
     <?php 
     for ($i = 1922; $i <= 2022; $i++) {
       printf('<option value="%d">%d год</option>', $i, $i);
@@ -58,7 +57,7 @@ if (!empty($messages)) {
   </div>
   <p></p>
   <div>
-  <select name="ability[]" multiple="multiply">
+  <select name="ability[]" multiple="multiply" <?php if ($errors['ability']) {print 'class="error"';} ?> value="<?php print $values['ability']; ?>">
     <option value="1">нет</option>
     <option value="2">Телепотрация</option>
     <option value="3">Невидимость</option>
@@ -69,7 +68,7 @@ if (!empty($messages)) {
   <p></p>
   <div>
   <label>Ваша Биография: </label>
-  <textarea name="biography"></textarea>
+  <textarea name="biography" <?php if ($errors['biography']) {print 'class="error"';} ?> value="<?php print $values['biography']; ?>"></textarea>
   </div>
   <input type="submit" value="ok" />
 </form>

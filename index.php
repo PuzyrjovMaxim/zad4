@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $errors['name'] = !empty($_COOKIE['name_error']);
   $errors['name1'] = !empty($_COOKIE['name_error1']);
   $errors['email'] = !empty($_COOKIE['email_error']);
+  $errors['email1'] = !empty($_COOKIE['email_error1']);
   $errors['year'] = !empty($_COOKIE['year_error']);
   $errors['sex'] = !empty($_COOKIE['sex_error']);
   $errors['limbs'] = !empty($_COOKIE['limbs_error']);
@@ -52,6 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($errors['email']) {
     // Удаляем куку, указывая время устаревания в прошлом.
     setcookie('email_error', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div class="error">Заполните email.</div>';
+  }
+  if ($errors['email1']) {
+    // Удаляем куку, указывая время устаревания в прошлом.
+    setcookie('email_error1', '', 100000);
     // Выводим сообщение.
     $messages[] = '<div class="error">Заполните корректно email.</div>';
   }
@@ -94,7 +101,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['year'] = empty($_COOKIE['year_value']) ? '' : $_COOKIE['year_value'];
   $values['sex'] = empty($_COOKIE['sex_value']) ? '' : $_COOKIE['sex_value'];
   $values['limbs'] = empty($_COOKIE['limbs_value']) ? '' : $_COOKIE['limbs_value'];
-  $values['ability'] = empty($_COOKIE['ability_value']) ? '' : $_COOKIE['ability_value'];
+  $values['1'] = empty($_COOKIE['1_value']) ? '' : $_COOKIE['1_value'];
+  $values['2'] = empty($_COOKIE['2_value']) ? '' : $_COOKIE['2_value'];
+  $values['3'] = empty($_COOKIE['3_value']) ? '' : $_COOKIE['3_value'];
+  $values['4'] = empty($_COOKIE['4_value']) ? '' : $_COOKIE['4_value'];
+  $values['5'] = empty($_COOKIE['5_value']) ? '' : $_COOKIE['5_value'];
   $values['biography'] = empty($_COOKIE['biography_value']) ? '' : $_COOKIE['biography_value'];
   // TODO: аналогично все поля.
 
@@ -122,9 +133,14 @@ else {
     setcookie('name_value', $_POST['name'], time() + 30 * 24 * 60 * 60);
   }
 
-  if (empty($_POST['email'])  || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+  if (empty($_POST['email'])) {
     // Выдаем куку на день с флажком об ошибке в поле fio.
     setcookie('email_error', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  }
+  if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    // Выдаем куку на день с флажком об ошибке в поле fio.
+    setcookie('email_error1', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   else {
@@ -168,8 +184,14 @@ else {
     $errors = TRUE;
   }
   else {
-    // Сохраняем ранее введенное в форму значение на месяц.
-    setcookie('ability_value', $_POST['ability'], time() + 30 * 24 * 60 * 60);
+    $abil = $_POST['ability'];
+    foreach($abil as $ab) {
+      if($ab =='1') {setcookie('1_value', 1, time() + 12 * 30 * 24 * 60 * 60);}
+      if($ab =='2') {setcookie('2_value', 1, time() + 12 * 30 * 24 * 60 * 60);}
+      if($ab =='3') {setcookie('3_value', 1, time() + 12 * 30 * 24 * 60 * 60);}
+      if($ab =='4') {setcookie('4_value', 1, time() + 12 * 30 * 24 * 60 * 60);}
+      if($ab =='5') {setcookie('5_value', 1, time() + 12 * 30 * 24 * 60 * 60);}
+    }
   }
 
   if (empty($_POST['biography'])) {
@@ -195,6 +217,7 @@ else {
   else {
     // Удаляем Cookies с признаками ошибок.
     setcookie('name_error', '', 100000);
+    setcookie('name_error1', '', 100000);
     setcookie('email_error', '', 100000);
     setcookie('year_error', '', 100000);
     setcookie('sex_error', '', 100000);

@@ -36,7 +36,12 @@ if (!empty($messages)) {
   <select name="year" <?php if ($errors['year']) {print 'class="error"';} ?> value="<?php print $values['year']; ?>">
     <?php 
     for ($i = 1922; $i <= 2022; $i++) {
-      printf('<option value="%d">%d год</option>', $i, $i);
+      if($values['year']==$i){
+        printf("<option value=%d selected>%d </option>",$i,$i);
+      }
+      else{
+        printf("<option value=%d>%d </option>",$i,$i);
+      }
     }
     ?>
   </select>
@@ -69,6 +74,9 @@ if (!empty($messages)) {
   <div>
   <label>Ваша Биография: </label>
   <textarea name="biography" <?php if ($errors['biography']) {print 'class="error"';} ?> value="<?php print $values['biography']; ?>"></textarea>
+  </div>
+  <div <?php if ($errors['check']) {print 'class="error"';} ?> >
+  <input name="check" type="checkbox" value="<?php if($values['check']==TRUE){print 'checked';} ?>"/> Я согласен дать данные <br>
   </div>
   <input type="submit" value="ok" />
 </form>
